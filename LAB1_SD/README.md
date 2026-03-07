@@ -91,30 +91,36 @@ Ne gandim la cautare ca la un drum in matrice. Datorita sortarii lor, mereu ce e
 ```
 ### Problem 1.4 - Statistici de Ordine
 
-###  Problem 2.1 - my_stl_vector 
+###  Problem 2.1 - my_stl_vector + Problem 2.2
+Am folosit implemenatrea vectorului dinamic pentru a rezolva problema 2. Pentru insert(x) am folosit push_back(x), iar pentru pop_random() am ales o pozitie random, am dat swap intre valoarea de pe pozitia p si ultimul element ca sa pot da pop_back() in O(1).
+
 ```cpp
 #include <iostream>
+#include <random>
 using namespace std;
 
 class Vector{
     int sizee, capacity;
     int *array_ads,*new_array;
+
     void my_resize()
     {
+        if (capacity==0) capacity=2;
         capacity*=2;
         new_array=new int[capacity];
 
         for (int i=0;i<sizee;i++)
             new_array[i]=array_ads[i];
-        
+
         delete[] array_ads;
         array_ads=new_array;
     }
 public:
     Vector(int cp=2)
     {
-        capacity=cp; sizee=0;
+        capacity=cp;
         array_ads=new int[cp];
+        sizee=0;
     }
     ///constructor de copiere
     Vector(Vector &other)
@@ -123,7 +129,6 @@ public:
         capacity=other.capacity;
 
         array_ads=new int[capacity];
-
         for(int i=0;i<sizee;i++)
             array_ads[i]=other.array_ads[i];
     }
@@ -133,15 +138,32 @@ public:
     }
     void my_push_back(int val)
     {
-        if (sizee==capacity)
-            my_resize();
+        if (sizee==capacity) my_resize();
         array_ads[sizee++]=val;
+    }
+    void pop_random()
+    {
+        if (sizee == 0)
+        {
+            cout << "Vectorul este gol!"<<'\n';
+            return;
+        }
+
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_int_distribution<int> distributie(0, sizee - 1);
+
+        int pozitie_random = distributie(gen);
+        cout<<array_ads[pozitie_random]<<' ';
+
+        array_ads[pozitie_random]=array_ads[sizee-1];
+        my_pop_back();
     }
     void my_pop_back()
     {
-        if(sizee>0)
-            sizee--;
+        if(sizee>0) sizee--;
     }
+
     int get_size()
     {
         return sizee;
@@ -157,8 +179,10 @@ public:
         return *(array_ads+i);
     }
 
-    void &operator =(Vector &other)
+    Vector &operator =(Vector &other)
     {
+        if (this==&other){ return *this;}
+
         ///setam noul size, si noua capacitate
         sizee=other.sizee;
         capacity=other.capacity;
@@ -170,27 +194,36 @@ public:
         ///copiem elementele
         for(int i=0; i<sizee; i++)
             array_ads[i]=other.array_ads[i];
+        return *this;
+
     }
 
+
 };
-int main()
-{
-    ///teste
-    Vector v1,v2,v3;
-    for(int i=0;i<100;i++)
-      v1.my_push_back(i);
-    for(int i=1;i<=500;i*=2)
-      v2.my_push_back(i);
-    cout<<v2.get_capacity()<<' '<<v2.get_size()<<'\n';
-    v1=v2;
-    int s=v1.get_size();
-    for (int i=0;i<s;i++)
-        cout<<v1[i]<<' ';
+int main() {
+    Vector v1;
+    for (int i = 1; i <= 5; i++) v1.my_push_back(i * 10);
+    cout << "v1: Size=" << v1.get_size() << " Cap=" << v1.get_capacity() << "\n";
+    v1[0] = 99;
+    cout << "v1 modificat la index 0: " << v1[0] << "\n";
+    Vector v2 = v1;
+    v2.my_pop_back();
+    cout << "v2 (copie) size dupa pop_back: " << v2.get_size() << "\n";
+    Vector v3;
+    v3 = v2;
+    v3 = v3;
+    cout << "Extrageri aleatoare din v3: ";
+    while (v3.get_size() > 0) { v3.pop_random(); }
+    cout << "\n";
+    v3.pop_random();
+    Vector v4(50);
+    v4.my_push_back(7);
+
     return 0;
 }
 
 ```
-### Problem 2.2 - kinda unordered_map
+
 
 ### Problem 3.1 - my_linked_list
 
