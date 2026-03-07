@@ -5,7 +5,8 @@ Am facut sume partiale.
 
 <img width="400" height="250" alt="image" src="https://github.com/user-attachments/assets/bb3304d1-3be8-49c3-8a3b-ea82b555189e" />
 
-``` #include <iostream>
+```cpp
+#include <iostream>
 #include <vector>
 using namespace std;
 int n,q;
@@ -43,7 +44,8 @@ Pornim cu i din stanga, cu j din dreapta si cand gasim v[i]+v[j]==s ne oprim.
 
 <img width="315" height="175" alt="image" src="https://github.com/user-attachments/assets/9d5c384a-158b-4f1f-b3a6-856b005881a7" />
 
-```class Solution {
+```cpp
+class Solution {
 public:
     vector<int> twoSum(vector<int>& numbers, int target) {
         int i=0,j=numbers.size()-1;
@@ -71,9 +73,7 @@ Ne gandim la cautare ca la un drum in matrice. Datorita sortarii lor, mereu ce e
 
 <img width="320" height="175" alt="image" src="https://github.com/user-attachments/assets/e55d5343-ed5a-4eac-b655-8b3fbcc19768" />
 
-```
-class Solution {
-public:
+```cpp
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         int m=matrix.size();
         int n=matrix[0].size();
@@ -92,7 +92,7 @@ public:
 ### Problem 1.4 - Statistici de Ordine
 
 ###  Problem 2.1 - my_stl_vector 
-```
+```cpp
 #include <iostream>
 using namespace std;
 
@@ -196,7 +196,8 @@ int main()
 
 Am facut o lista simplu inlantuita si i-am adaugat diferite functionalitati. 
 
-```#include <iostream>
+```cpp
+#include <iostream>
 using namespace std;
 class Node
 { public: int value;  Node *next;};
@@ -416,7 +417,7 @@ Am gasit algoritmul lui Newton-Raphson care calculeaza radacina patrata in log(l
 CPU -> aprox 6/10 iteratii pt numere de 64 biti => aprox 70 milioane de square roots/sec
 GPU -> prob 15 miliarde/sec 
 
-```
+```cpp
 #include <iostream>
 using namespace std;
 long long n;
