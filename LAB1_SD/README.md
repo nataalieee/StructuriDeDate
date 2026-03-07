@@ -441,6 +441,53 @@ int main()
 ```
 
 ### Problem 3.2 - ciclu in lista 
+Am folosit lista implementat anterior si am adaugat functionalitatile de lungime ciclu si pozitie de start pt ciclu. Spatiul suplimenatr e constant, caci folosim doar 2 pointeri suplimentari. Timpul e O(n), caci slow pointeul va face mereu max n pasi ca sa se intalneasca cu fast pointerul. 
+```cpp
+bool exista_ciclu()
+    {
+        Node *fp=head,*sp=head;
+        if (sp==nullptr) return 0; ///lista goala
+        while(true)
+        {
+            sp=sp->next;
+            fp=fp->next;
+            if(fp==nullptr) return 0;
+            fp=fp->next;
+            if(fp==nullptr) return 0;
+            if (sp==fp) ///daca s-au intalnit pointerii
+                return 1;
+        }
+    }
+int poz_inceput_ciclu()
+    {
+        Node *fp=head,*sp=head;
+        if (sp==nullptr) return 0; ///lista goala
+        while(true)
+        {
+            sp=sp->next;
+            fp=fp->next;
+            if(fp==nullptr) return 0;
+            fp=fp->next;
+            if(fp==nullptr) return 0;
+            if (sp==fp) ///daca s-au intalnit pointerii
+                {
+                    sp=head;
+                    int cnt=1;
+                    while(sp!=fp)
+                    {
+                        sp=sp->next; fp=fp->next; cnt++;
+                    }
+                    return cnt;
+                }
+        }
+    }
+    int lung_ciclu()
+    {
+        int p=poz_inceput_ciclu();
+        if (p!= 0) return length-p+1;
+        return 0;
+    }
+```
 
 ### Problem 4.1 - Candies
 
@@ -479,4 +526,4 @@ int main() {
 
 ### 2. Find Any Duplicate
 
-Am primit hintul de la colegii mei cu iepurele si testoasa :))
+
