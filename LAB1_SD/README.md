@@ -238,6 +238,15 @@ class List
 {
     Node *head=nullptr, *tail=nullptr; int length=0;
 public:
+    ~List()
+    {
+        while(head!=nullptr)
+            {
+                Node *current=head;
+                head=head->next;
+                delete current;
+            }
+    }
     void push_back(int v)
     {
         Node *nod_nou=new Node();
