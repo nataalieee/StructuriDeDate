@@ -500,6 +500,40 @@ int poz_inceput_ciclu()
 
 ### Problem 4.1 - Candies
 
+Nu pot pune printscreen.
+
+
+```cpp
+class Solution {
+public:
+    bool check(long long cant, vector<int>& v, long long k) {
+        if (cant==0) return true;
+        long long cnt=0;
+        for (int i=0; i<v.size(); i++)
+            cnt+=v[i]/cant;
+        if (cnt>=k) return 1;
+        return 0;
+    }
+
+    int maximumCandies(vector<int>& candies, long long k) {
+        long long rasp=0;
+        long long st=0;
+        long long dr=0;
+        for(int i=0; i<candies.size(); i++) if(candies[i]>dr) dr=candies[i];
+
+        while (st<=dr) {
+            long long mid=st+(dr-st)/2;
+            if (check(mid, candies, k))
+            {
+                rasp=mid; st=mid+1;
+            }
+            else dr=mid-1;
+        }
+        return (int)rasp;
+    }
+};
+```
+
 ### Problem 4.2 - Square root of n
 
 Am gasit algoritmul lui Newton-Raphson care calculeaza radacina patrata in log(log n). Practic noi cautam "latura unui patrat" cu aria <= n si la fiecare pas facem media aritmetica dintre  x-ul ghicit si n/x, astfel apropiindu-ne de rezultat. Partea matematica spune ca la fiecare pas se dubleaza numarul de biti corecti. 
