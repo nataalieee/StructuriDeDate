@@ -90,6 +90,7 @@ Ne gandim la cautare ca la un drum in matrice. Datorita sortarii lor, mereu ce e
 };
 ```
 ### Problem 1.4 - Statistici de Ordine
+`in progress...`
 
 ###  Problem 2.1 - my_stl_vector + Problem 2.2
 Am folosit implemenatrea vectorului dinamic pentru a rezolva problema 2. Pentru insert(x) am folosit push_back(x), iar pentru pop_random() am ales o pozitie random, am dat swap intre valoarea de pe pozitia p si ultimul element ca sa pot da pop_back() in O(1).
@@ -500,8 +501,9 @@ int poz_inceput_ciclu()
 
 ### Problem 4.1 - Candies
 
-Nu pot pune printscreen.
+Am facut cautarea binara a raspunsului. De feicare data cand raspunsul era satisfacator, incercam cu o cantitate si mai mare, pana nu mai era unr aspuns viabil. Functia de check verifica efectiv daca putem da cantitatea C la >= k copii. 
 
+![Screenshot-ul meu](candies.png)
 
 ```cpp
 class Solution {
@@ -566,7 +568,8 @@ int main() {
 ## Bonus 
 
 ### 1. LRU Cache
+`in progress...`
 
 ### 2. Find Any Duplicate
-
+`in progress...`
 
