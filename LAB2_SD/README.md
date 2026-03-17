@@ -3,6 +3,7 @@
 ### Problem 1.1 - Nearest Smaller Values
 
 <img width="450" height="150" alt="image" src="https://github.com/user-attachments/assets/ccb4e094-30ba-4f0d-982e-e5e7e8883b11" />
+
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -39,7 +40,6 @@ int main()
     for(int i=0;i<n;i++) cout<<rasp[i]<<' ';
     return 0;
 }
-
 ```
 ### Problem 1.2 - Strabunica
 ### Problem 1.3 - Fadema
