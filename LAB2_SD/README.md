@@ -28,7 +28,7 @@ int main()
 
         else
         {
-            while(s.top().first>=v[i] && !s.empty())
+            while(!s.empty() && s.top().first>=v[i] )
             {
                 s.pop();
             }
