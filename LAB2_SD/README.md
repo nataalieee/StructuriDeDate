@@ -3,6 +3,8 @@
 TESTARE PULL REQUEST nr 2
 ### Problem 1.1 - Nearest Smaller Values
 
+https://cses.fi/paste/445b2c8a3ced649efd0d75/
+
 <img width="450" height="150" alt="image" src="https://github.com/user-attachments/assets/ccb4e094-30ba-4f0d-982e-e5e7e8883b11" />
 
 ```cpp
@@ -39,6 +41,9 @@ int main()
 }
 ```
 ### Problem 1.2 - Strabunica
+
+https://www.infoarena.ro/job_detail/3347524?action=view-source
+
 <img width="350" height="150" alt="image" src="https://github.com/user-attachments/assets/27696b9a-6c11-4c5b-ac9a-0ad86dfbf87e" />
 
 ```cpp
@@ -102,6 +107,8 @@ int main()
 
 ### Problem 1.3 - Fadema
 ### Problem 1.4 
+
+(update si aici)
 Ne gandim la prob ca la un graf => a[i][j]=1 <=> i il cunoste pe j. Un nod este celebritate daca linia a[nod][] este plina de 0, si coloana lui a[][nod] de 1, cu exceptia a[nod][nod]. Astfel, noi incepem din coltul stanga-sus si ne uitam pe coloana.
 ```cpp
 #include <bits/stdc++.h>
@@ -132,6 +139,8 @@ int main()
 ### Problem 2.1 - Alee
 ### Problem 2.2 - Vase
 ### Problem 3.1 - Deque
+
+https://www.infoarena.ro/job_detail/3347534?action=view-source
 
 <img width="400" height="200" alt="image" src="https://github.com/user-attachments/assets/8ff5ccba-3edf-4570-b2f7-77d5b15210cf" />
 
