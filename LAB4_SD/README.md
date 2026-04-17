@@ -24,8 +24,64 @@ public:
     }
 };
 ```
-### Problem 1.3 - Reciver a BST
+### Problem 1.3 - Recover a BST
 ### Problem 1.4 – Serialize and Deserialize a BST
+
+https://leetcode.com/problems/serialize-and-deserialize-bst/submissions/1980821842
+
+```cpp
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+  };
+
+class Codec {
+public:
+    void dfs(TreeNode *current, string &code) {
+        if (current == NULL) {return;}
+        code+=to_string(current->val);
+        code+=" ";
+        dfs(current->left,code);
+        dfs(current->right,code);
+    }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string rasp="";
+        TreeNode* rad = root;
+        dfs(root,rasp);
+        return rasp;
+    }
+    TreeNode* dfs2(queue<int> &q, int st, int dr) {
+        if (q.empty())return NULL;
+        int val=q.front();
+
+        if (val<st || val>dr) {
+            return NULL;
+        }
+        q.pop();
+        TreeNode* current = new TreeNode(val);
+        current->left = dfs2(q, st, val);   // In stanga: valoare < radacina
+        current->right = dfs2(q, val, dr); // In dreapta: valoare > radacina
+
+        return current;
+
+    }
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        if (data.empty()) return NULL;
+        stringstream ss(data);
+        queue<int> q;
+        int val;
+        while (ss >> val) {
+            q.push(val);
+        }
+
+        return dfs2(q, INT_MIN, INT_MAX);
+    }
+};
+```
 
 ### Problem 2.1 - Heap
 
@@ -129,6 +185,63 @@ public:
 };
 ```
 ### Problem 2.3 – Dijkstra
+
+https://www.infoarena.ro/job_detail/3351151?action=view-source
+
+```cpp
+#include <vector>
+#include <fstream>
+#include <queue>
+#include <iostream>
+#include <climits>
+#define nmax 50003
+using namespace std;
+ifstream f("dijkstra.in");
+ofstream g("dijkstra.out");
+typedef pair<int,int> pii;
+int dist[nmax],n,m;
+vector<pii> adj[nmax];
+void dijkstra(int start) {
+    dist[start] = 0;
+    priority_queue<pii,vector<pii>,greater <pii> >pq;
+
+    pq.push({dist[start],start});
+    while(!pq.empty()) {
+        int cost=pq.top().first;
+        int node=pq.top().second;
+        pq.pop();
+
+        if (cost<=dist[node]) {
+            for(int i=0;i<adj[node].size();i++) {
+                int new_node=adj[node][i].first;
+                int new_cost=adj[node][i].second;
+
+                if (dist[new_node]>dist[node]+new_cost) {
+                    dist[new_node]=dist[node]+new_cost;
+                    pq.push({dist[new_node],new_node});
+                }
+
+            }
+        }
+    }
+}
+int main() {
+    ///citire
+    f>>n>>m;
+    for (int i=0;i<m;i++) {
+        int x,y,w;
+        f>>x>>y>>w;
+        adj[x].push_back({y,w});
+    }
+    for (int i=2;i<=n;i++) dist[i]=INT_MAX;
+    dijkstra(1);
+    for (int i=2;i<=n;i++) {
+        if (dist[i]==INT_MAX) g<<0<<' ';
+        else g<<dist[i]<<' ';
+    }
+    return 0;
+}
+```
 ### Problem 2.4 – Interclasari
 https://www.pbinfo.ro/detalii-evaluare/55341236
 
@@ -168,6 +281,65 @@ int main()
 ```
 ### Problem 2.5 – Find Median from Data Stream
 
+https://leetcode.com/problems/find-median-from-data-stream/submissions/1980788053
+
+Am folosit un max-heap pentru jumatatea de numere mai mici, si un min-heap pentru jumatatea de numere mai mari.
+
+```cpp
+
+class MedianFinder {
+    priority_queue<int,vector<int>,greater<int>> minHeap;
+    priority_queue<int> maxHeap;
+public:
+    MedianFinder() {
+
+    }
+
+    void addNum(int num) {
+        if (maxHeap.empty() || num <= maxHeap.top()) {
+            maxHeap.push(num);
+        }
+        else {
+            minHeap.push(num);
+        }
+
+        if (maxHeap.size()>minHeap.size()+1) {
+            int curent=maxHeap.top();
+            maxHeap.pop();
+            minHeap.push(curent);
+        }
+        else if (minHeap.size()>maxHeap.size()+1) {
+            int current=minHeap.top();
+            minHeap.pop();
+            maxHeap.push(current);
+
+        }
+    }
+
+    double findMedian() {
+        if (minHeap.size()==0 && maxHeap.size()==0) {
+            return 0.0;
+        }
+        if (minHeap.size()==maxHeap.size()) {
+            double mediana=0;
+            int c1=minHeap.top();
+            int c2=maxHeap.top();
+            mediana=(c1+c2)/2.;
+            return mediana;
+        }
+        else if (maxHeap.size()>minHeap.size()) {
+            int curent=maxHeap.top();
+            return (double)(curent);
+        }
+        else {
+            int curent=minHeap.top();
+            return (double)(curent);
+        }
+    }
+};
+
+
+```
 
 
 ## Bonus 
