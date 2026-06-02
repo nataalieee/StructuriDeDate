@@ -411,8 +411,113 @@ public:
 ```
 
 ### Problem 2.2
+
+https://www.infoarena.ro/job_detail/3356515
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+ifstream f("secv5.in");
+ofstream g("secv5.out");
+
+int n,l,u,cnt=1;
+vector<long long> arr;
+vector<int> arr_norm;
+unordered_map<long long,int> id;
+long long cauta_secventa(int x) {
+    vector<int> frecv(cnt+1, 0);
+    int dist_cnt=0;
+    long long final_ans=0;
+    int st=0;
+    for (int i=0;i<n; i++) {
+       // cout<<final_ans<<" ";
+        if (!frecv[arr_norm[i]]) dist_cnt++;
+        frecv[arr_norm[i]]++;
+
+        while (dist_cnt>=x && st<=i) {
+            final_ans+=(n-i);
+            frecv[arr_norm[st]]--;
+            if (frecv[arr_norm[st]]==0) dist_cnt--;
+            st++;
+        }
+    }
+    return final_ans;
+}
+int main() {
+    f>>n>>l>>u;
+    arr.resize(n);
+    arr_norm.resize(n);
+    for(int i=0;i<n;i++) {
+        f>>arr[i];
+        if (id[arr[i]]==0) id[arr[i]]=cnt++;
+        arr_norm[i]=id[arr[i]];
+    }
+
+    g<<cauta_secventa(l)-cauta_secventa(u+1);
+}
+```
+
 ### Problem 2.4
 
+```cpp 
+#include <iostream>
+#include <vector>
+#include <random>
+#include <chrono>
+using namespace std;
+
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+vector<long long>a;
+vector<unsigned long long> h,pref_a,pref_perm;
+int main() {
+    int n, q;
+    cin>>n>>q;
+
+    a.resize(n);
+    long long max_val = 0;
+    for (int i=0; i<n; i++) {
+        cin >> a[i];
+        if (a[i]>max_val) {
+            max_val=a[i];
+        }
+    }
+
+
+    long long limit=max(max_val, (long long)n) + 1;
+    h.resize(limit);
+    for (int i=0; i<limit; i++) {
+        h[i]=rng();
+    }
+
+
+    pref_a.resize(n+1, 0);
+    for (int i=0; i<n; i++) {
+        pref_a[i+1]=pref_a[i]+h[a[i]];
+    }
+
+
+    pref_perm.resize(limit+1, 0);
+    for (int i=0; i<limit; i++) {
+        pref_perm[i+1]=pref_perm[i]+h[i];
+    }
+
+    for (int i=0; i<q; i++) {
+        int l, r;
+        cin>>l>>r;
+
+        int k=r-l;
+        unsigned long long current_hash=pref_a[r+1]-pref_a[l];
+        unsigned long long target_hash=pref_perm[k+1];
+
+        if (current_hash==target_hash) {
+            cout << "DA\n";
+        } else {
+            cout << "NU\n";
+        }
+    }
+
+    return 0;
+}```
 
 ### Problem 2.5 - subsecvente 
 
