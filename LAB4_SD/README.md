@@ -1,6 +1,224 @@
 ## Tema 4 SD - Pogar Denisa Natalia 151 
 
 ### Problem 1.1 - BST
+
+```cpp
+struct Node{
+    int key, priority;
+    Node *left, *right;
+    Node(int val):key{val},left{nullptr},right{nullptr}{
+        static std::random_device rd;
+        static std::mt19937 mt(rd());
+
+        priority = mt();
+    }
+};
+class Treap{
+    Node* root;
+
+    ///fiul stang urca
+    Node* rotate_right(Node* current)
+    {
+        Node* left_child=current->left;
+        current->left=left_child->right;
+        left_child->right=current;
+        return left_child;
+    }
+
+    ///fiul drept urca
+    Node* rotate_left(Node* current)
+    {
+        Node* right_child=current->right;
+        current->right=right_child->left;
+        right_child->left=current;
+        return right_child;
+    }
+    Node* insert(Node* node, int val)
+    {
+        ///daca e gol
+        if(node==nullptr)
+            return new Node(val);
+
+        if(val<node->key)
+        {
+            node->left=insert(node->left, val);
+            ///reechilibram la nevoie -> prop de heap
+            if(node->left->priority > node->priority)
+                {
+                    node=rotate_right(node);
+                }
+        }
+        else if(val>node->key)
+        {
+            node->right=insert(node->right, val);
+            ///reechilibram la nev ->prop de heap
+            if(node->right->priority > node->priority)
+            {
+                node=rotate_left(node);
+            }
+        }
+        return node;
+    }
+    void private_construct(vector<int>& vals)
+    {
+        for(int x:vals)
+            root=insert(root, x);
+    }
+
+    Node* erase(Node* node, int val)
+    {
+        ///nu exista
+        if(node==nullptr) return nullptr;
+
+        if(val < node->key)
+            node->left=erase(node->left, val);
+        else if(val > node->key)
+            node->right=erase(node->right, val);
+
+        else ///l-am gasit
+        {
+            ///0 copii
+            if(node->left==nullptr && node->right==nullptr)
+            {
+                delete node; return nullptr;
+            }
+
+            /// 1 copil -> stang
+            if(node->right==nullptr)
+            {
+                Node *aux=node->left;
+                delete node; return aux;
+            }
+            ///1 copil -> dreapta
+            else if(node->left==nullptr)
+            {
+                Node *aux=node->right;
+                delete node; return aux;
+            }
+
+            ///2 fii
+            else if (node->left->priority > node->right->priority)
+            {
+                node=rotate_right(node);
+                node->right=erase(node->right, val);
+            }
+            else
+            {
+                node=rotate_left(node);
+                node->left=erase(node->left, val);
+            }
+
+        }
+        return node;
+    }
+    ///cel mai mic nod dintr-un subarbore
+    Node* minimum(Node* node)
+    {
+        while(node->left != nullptr)
+            node=node->left;
+        return node;
+    }
+
+    ///cel mai mare nod dintr-un subarbore
+    Node* maximum(Node* node)
+    {
+        while(node->right != nullptr)
+            node=node->right;
+        return node;
+    }
+    Node* successor(Node *node, int val)
+    {
+        Node *succ=nullptr;
+
+        while(node!=nullptr)
+        {
+            if(val<node->key)
+            {
+                succ=node;
+                node=node->left;
+            }
+            else if (val>node->key)
+            {
+                node=node->right;
+            }
+            else ///am agsit fix valoarea cautata
+            {
+                if(node->right!=nullptr)
+                    succ=minimum(node->right);
+                break;
+            }
+        }
+        return succ;
+    }
+
+    Node* predecessor(Node *node, int val)
+    {
+        Node *pred=nullptr;
+
+        while(node!=nullptr)
+        {
+            if(val<node->key)
+            {
+                node=node->left;
+            }
+            else if (val>node->key)
+            {
+                pred=node;
+                node=node->right;
+            }
+            else ///am agsit fix valoarea cautata
+            {
+                if(node->left!=nullptr)
+                    pred=maximum(node->left);
+                break;
+            }
+        }
+        return pred;
+    }
+public:
+    Treap():root{nullptr}{}
+    void insert(int x)
+    {
+        root=insert(root, x);
+    }
+    void construct(vector<int> vals)
+    {
+        private_construct(vals);
+    }
+    bool exists(int x)
+    {
+        Node* current=root;
+        while(current!=nullptr)
+        {
+            if(x==current->key) return true;
+            else if(x < current->key) current=current->left;
+            else current=current->right;
+        }
+        return false;
+    }
+    void erase(int x)
+    {
+        root=erase(root,x);
+    }
+    void successor(int x)
+    {
+        Node* result=successor(root, x);
+        if(result==nullptr)
+            cout<<"Nu exista succesor"<< endl;
+        else
+            cout<<result->key<<endl;
+    }
+    void predecessor(int x)
+    {
+        Node* result=predecessor(root, x);
+        if(result==nullptr)
+            cout<<"Nu exista predecesor"<< endl;
+        else
+            cout<<result->key<<endl;
+    }
+};
+```
+
 ### Problem 1.2 - Validate a BST
 https://leetcode.com/problems/validate-binary-search-tree/submissions/1973852842
 
